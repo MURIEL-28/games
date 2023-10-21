@@ -1,0 +1,55 @@
+
+# This is a hangamn game, created on the 21.10.2023
+
+
+import random
+
+# Definieren einer Liste von Wörtern für das Spiel
+word_list = ["apfel", "banane", "birne", "kiwi"]
+
+# Ein Wort aussuchen
+word = random.choice(word_list)
+
+# Initialisierung und definieren der Versuche
+guessed_letters = []
+attempts = 5
+
+# Funktion zum das Wort anzeigen
+def display_word(word, guessed_letters):
+  display = ""
+  for letter in word:
+    if letter in guessed_letters:
+      display += letter
+    else:
+      display += "_"
+  return display
+
+print("Wilkommen bei Hangman!")
+print(display_word(word, guessed_letters))
+
+while True:
+  guess = input("Rate ein Buchstabe: ").lower()
+
+  if len(guess) != 1 or not guess.isalpha():
+    print("Bitte gib einen Buchstaben ein.")
+    continue
+
+  if guess in guessed_letters:
+    print("Du hast den Buchstaben bereits eingegeben.")
+    continue
+
+  guessed_letters.append(guess)
+
+  if guess not in word:
+    attempts -= 1
+    print(f"Der Buchstabe ist falsch. Du hast {attempts} übrig.")
+    if attempts == 0:
+      print(f"Sorry, du hast keine Versuche mehr. Das Wort war: {word}")
+
+  word_display = display_word(word, guessed_letters)
+  print(word_display)
+
+  if "_" not in word_display:
+    print("Gratuliere, du hast gewonnen!")
+    break
+
